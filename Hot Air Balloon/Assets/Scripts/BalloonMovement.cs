@@ -7,57 +7,40 @@ public class BalloonMovement : MonoBehaviour
     private Touch theTouch;
     public Transform balloonMovement;
     float speed = .01f;
-    float yMax = -1f;
+    public float smooth = 1f;
+    private Quaternion targetRotation;
     // Start is called before the first frame update
 
     void Start()
     {
         Invoke("Update", 20);
+        targetRotation = transform.rotation;
     }
 
     // Update is called once per frame
 
     void Update()
     {
+        Debug.Log(balloonMovement.rotation.z);
         if (Input.touchCount > 0)
         {
             theTouch = Input.GetTouch(0);
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(theTouch.position);
-            if (balloonMovement.position.y < yMax)
-            {
-                if (theTouch.phase == TouchPhase.Began)
-                {
-                    transform.Translate(0, speed, 0);
-                }
-            }
+
             if (theTouch.phase == TouchPhase.Moved)
             {
-                if (balloonMovement.position.y < yMax)
-                {
-                    transform.Translate(0, speed, 0);
-                }
-                if (balloonMovement.position.y < yMax)
-                { 
                     if (touchPos.x <= balloonMovement.position.x)
                     {
                         transform.Translate(-speed, speed, 0);
+                        targetRotation *= Quaternion.AngleAxis(-20, Vector3.back);
                     }
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
                     if (touchPos.x >= balloonMovement.position.x)
                     {
                         transform.Translate(speed, speed, 0);
+                        targetRotation *= Quaternion.AngleAxis(20, Vector3.back);
                     }
-                }
-                if (balloonMovement.position.y >= yMax)
-                {
-                    if (touchPos.x <= balloonMovement.position.x)
-                    {
-                        transform.Translate(-speed, 0, 0);
-                    }
-                    if (touchPos.x >= balloonMovement.position.x)
-                    {
-                        transform.Translate(speed, 0, 0);
-                    }
-                }
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
             }
         }
     }
