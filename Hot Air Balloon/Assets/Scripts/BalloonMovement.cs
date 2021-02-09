@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class BalloonMovement : MonoBehaviour
 {
-    private Touch theTouch;
+    private Touch theTouch, theTouchAfter;
     public Transform balloonMovement;
-    float speed = .01f;
+    float speed = 2f;
     public float smooth = 1f;
     private Quaternion targetRotation;
+    bool fingerOff = false;
+    public float angle = 391.1f;
     // Start is called before the first frame update
+
+    Vector2 VectorFromAngle(float T)
+    {
+        return new Vector2(Mathf.Cos(T), Mathf.Sin(T));
+    }
 
     void Start()
     {
@@ -21,8 +28,9 @@ public class BalloonMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(fingerOff);
         Debug.Log(balloonMovement.rotation.z);
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 )
         {
             theTouch = Input.GetTouch(0);
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(theTouch.position);
@@ -31,16 +39,35 @@ public class BalloonMovement : MonoBehaviour
             {
                     if (touchPos.x <= balloonMovement.position.x)
                     {
-                        transform.Translate(-speed, speed, 0);
+                       
                         targetRotation *= Quaternion.AngleAxis(-20, Vector3.back);
                     }
                     transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
                     if (touchPos.x >= balloonMovement.position.x)
                     {
-                        transform.Translate(speed, speed, 0);
                         targetRotation *= Quaternion.AngleAxis(20, Vector3.back);
                     }
                     transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10 * smooth * Time.deltaTime);
+            }
+            if (theTouch.phase == TouchPhase.Ended)
+            {
+                fingerOff = true;
+
+            }
+        }
+
+        
+        if (fingerOff == true)
+        {
+
+            transform.Translate(VectorFromAngle(angle) * speed * Time.deltaTime);
+            if (Input.touchCount > 0)
+            {
+                theTouchAfter = Input.GetTouch(0);
+                if (theTouchAfter.phase == TouchPhase.Began)
+                {
+                    fingerOff = false;
+                }
             }
         }
     }
