@@ -28,8 +28,6 @@ public class BalloonMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(fingerOff);
-        Debug.Log(balloonMovement.rotation.z);
         if (Input.touchCount > 0 )
         {
             theTouch = Input.GetTouch(0);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2223879800836953355}
   - component: {fileID: 2223879800836953354}
   - component: {fileID: -9047247224256426467}
+  - component: {fileID: -5061515021802741594}
   m_Layer: 0
   m_Name: SpinningSpike1
   m_TagString: Untagged
@@ -128,3 +129,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.6368876, y: 4.9683914}
   m_EdgeRadius: 0
+--- !u!114 &-5061515021802741594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2223879800836953353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b982687a5779947abc65f40921b4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  myAnimationController: {fileID: 0}
+  balloon: {fileID: 0}
+  movement: {fileID: 0}

@@ -15,12 +15,13 @@ public class ScreenBound : MonoBehaviour
 
     void LateUpdate()
     {
-        bounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        
+        bounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z)); 
         objH = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
         objW = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         Vector3 viewPos = transform.position;
         viewPos.x = Mathf.Clamp(viewPos.x, -bounds.x + objW - .75f, bounds.x - objW +.75f);
-        viewPos.y = Mathf.Clamp(viewPos.y, -bounds.y + objH, bounds.y - objH);
+        viewPos.y = Mathf.Clamp(viewPos.y, -bounds.y + objH + .75f, bounds.y - objH +.75f);
         transform.position = viewPos;
     }
 }
